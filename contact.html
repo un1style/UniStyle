@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — UniStyle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="logo">UNI<span>STYLE</span></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html" data-page="index.html">Home</a>
+      <a href="shop.html" data-page="shop.html">Shop</a>
+      <a href="about.html" data-page="about.html">About</a>
+      <a href="contact.html" data-page="contact.html">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <a href="cart.html" class="icon-btn" aria-label="Cart">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16151c" stroke-width="1.8"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        <span class="cart-count" data-cart-count>0</span>
+      </a>
+      <button class="menu-toggle" aria-label="Menu" aria-expanded="false" onclick="document.getElementById('navLinks').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="page-head">
+  <div class="wrap">
+    <p class="breadcrumb"><a href="index.html">Home</a> / Contact</p>
+    <h1>Get in touch</h1>
+    <p class="muted">Questions about sizing, an order, or a wholesale inquiry — send it over.</p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap split">
+    <form id="contactForm">
+      <div class="form-grid">
+        <div class="field"><label for="cName">Name</label><input id="cName" required></div>
+        <div class="field"><label for="cEmail">Email</label><input id="cEmail" type="email" required></div>
+        <div class="field full"><label for="cSubject">Subject</label><input id="cSubject" required></div>
+        <div class="field full"><label for="cMessage">Message</label><textarea id="cMessage" rows="5" required></textarea></div>
+      </div>
+      <button type="submit" class="btn" style="margin-top:20px;">Send message</button>
+      <p class="muted" id="formNote" style="font-size:.8rem;margin-top:14px;"></p>
+    </form>
+
+    <div>
+      <div class="value-card" style="margin-bottom:20px;">
+        <h3 style="font-size:1.2rem;">Email</h3>
+        <p class="muted mt-0">hello@unistyle.example</p>
+      </div>
+      <div class="value-card" style="margin-bottom:20px;">
+        <h3 style="font-size:1.2rem;">Response time</h3>
+        <p class="muted mt-0">We typically reply within 1–2 business days.</p>
+      </div>
+      <div class="value-card">
+        <h3 style="font-size:1.2rem;">Returns &amp; exchanges</h3>
+        <p class="muted mt-0">30 days from delivery, unworn and with tags attached. Mention your order ID when you write in.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="stitch"></div>
+    <div class="footer-bottom">
+      <span>© <span data-year></span> UniStyle. All rights reserved.</span>
+      <span>Built for a small business, one seam at a time.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script>
+  document.getElementById("contactForm").addEventListener("submit", e => {
+    e.preventDefault();
+    document.getElementById("formNote").textContent =
+      "This form is a front-end demo and isn't wired to send email yet — see the README for how to connect it (e.g. Formspree) in a few minutes.";
+    showToast("Message captured locally — connect a form service to send it for real.");
+    e.target.reset();
+  });
+</script>
+</body>
+</html>

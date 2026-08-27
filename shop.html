@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop — UniStyle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="logo">UNI<span>STYLE</span></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html" data-page="index.html">Home</a>
+      <a href="shop.html" data-page="shop.html">Shop</a>
+      <a href="about.html" data-page="about.html">About</a>
+      <a href="contact.html" data-page="contact.html">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <a href="cart.html" class="icon-btn" aria-label="Cart">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16151c" stroke-width="1.8"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        <span class="cart-count" data-cart-count>0</span>
+      </a>
+      <button class="menu-toggle" aria-label="Menu" aria-expanded="false" onclick="document.getElementById('navLinks').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="page-head">
+  <div class="wrap">
+    <p class="breadcrumb"><a href="index.html">Home</a> / Shop</p>
+    <h1>The collection</h1>
+    <p class="muted">Every current style, one unisex size range, no separate men's or women's aisle.</p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="filter-bar">
+      <div class="filter-group" id="categoryChips">
+        <button class="chip active" data-category="All">All</button>
+      </div>
+      <div class="filter-group">
+        <input type="search" id="searchInput" class="search-input" placeholder="Search products…" aria-label="Search products">
+        <select id="sortSelect" class="select" aria-label="Sort products">
+          <option value="default">Sort: Featured</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="name-asc">Name: A–Z</option>
+        </select>
+      </div>
+    </div>
+    <p class="muted" id="resultCount" style="margin-bottom:20px;"></p>
+    <div class="grid" id="productGrid"></div>
+    <p class="center muted" id="emptyMsg" style="display:none;padding:60px 0;">No products match your filters — try clearing the search or picking another category.</p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" class="logo">UNI<span>STYLE</span></a>
+        <p class="muted" style="margin-top:12px;max-width:32ch;">Unisex staples, cut on one block and sized for every body. Small batches, made to last.</p>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul><li><a href="shop.html">All products</a></li><li><a href="cart.html">Your cart</a></li></ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul><li><a href="about.html">About UniStyle</a></li><li><a href="contact.html">Contact</a></li></ul>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <ul><li><a href="contact.html">Shipping &amp; returns</a></li><li><a href="contact.html">Size guide</a></li></ul>
+      </div>
+    </div>
+    <div class="stitch"></div>
+    <div class="footer-bottom">
+      <span>© <span data-year></span> UniStyle. All rights reserved.</span>
+      <span>Built for a small business, one seam at a time.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script>
+  const params = new URLSearchParams(location.search);
+  let state = {
+    category: params.get("category") || "All",
+    search: "",
+    sort: "default"
+  };
+
+  const chipsEl = document.getElementById("categoryChips");
+  getCategories().forEach(c => {
+    const btn = document.createElement("button");
+    btn.className = "chip" + (state.category === c ? " active" : "");
+    btn.dataset.category = c;
+    btn.textContent = c;
+    chipsEl.appendChild(btn);
+  });
+  if(state.category !== "All"){
+    chipsEl.querySelector('[data-category="All"]').classList.remove("active");
+  }
+
+  chipsEl.addEventListener("click", e => {
+    const btn = e.target.closest(".chip");
+    if(!btn) return;
+    state.category = btn.dataset.category;
+    chipsEl.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+    btn.classList.add("active");
+    render();
+  });
+
+  document.getElementById("searchInput").addEventListener("input", e => {
+    state.search = e.target.value.trim().toLowerCase();
+    render();
+  });
+  document.getElementById("sortSelect").addEventListener("change", e => {
+    state.sort = e.target.value;
+    render();
+  });
+
+  function productCard(p){
+    const onSale = p.oldPrice ? `<span class="tag-badge tag-badge--sale">Sale</span>` : (!p.stock ? `<span class="tag-badge">Sold out</span>` : "");
+    const priceHtml = p.oldPrice
+      ? `${formatPrice(p.price)} <span class="old">${formatPrice(p.oldPrice)}</span>`
+      : formatPrice(p.price);
+    return `
+      <div class="card">
+        <a href="product.html?id=${p.id}" class="card-media" style="background:${p.swatch}22;">
+          ${onSale}
+          ${getGarmentSVG(p.icon, p.swatch)}
+        </a>
+        <div class="card-body">
+          <span class="card-cat">${p.category}</span>
+          <a href="product.html?id=${p.id}"><h3 class="card-name">${p.name}</h3></a>
+          <div class="card-price">${priceHtml}</div>
+        </div>
+      </div>`;
+  }
+
+  function render(){
+    let list = PRODUCTS.filter(p => state.category === "All" || p.category === state.category);
+    if(state.search){
+      list = list.filter(p => p.name.toLowerCase().includes(state.search) || p.category.toLowerCase().includes(state.search));
+    }
+    if(state.sort === "price-asc") list = [...list].sort((a,b) => a.price - b.price);
+    if(state.sort === "price-desc") list = [...list].sort((a,b) => b.price - a.price);
+    if(state.sort === "name-asc") list = [...list].sort((a,b) => a.name.localeCompare(b.name));
+
+    document.getElementById("resultCount").textContent = `${list.length} item${list.length === 1 ? "" : "s"}`;
+    document.getElementById("productGrid").innerHTML = list.map(productCard).join("");
+    document.getElementById("productGrid").style.display = list.length ? "grid" : "none";
+    document.getElementById("emptyMsg").style.display = list.length ? "none" : "block";
+  }
+
+  render();
+</script>
+</body>
+</html>

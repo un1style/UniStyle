@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — UniStyle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="logo">UNI<span>STYLE</span></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html" data-page="index.html">Home</a>
+      <a href="shop.html" data-page="shop.html">Shop</a>
+      <a href="about.html" data-page="about.html">About</a>
+      <a href="contact.html" data-page="contact.html">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <a href="cart.html" class="icon-btn" aria-label="Cart">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16151c" stroke-width="1.8"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        <span class="cart-count" data-cart-count>0</span>
+      </a>
+      <button class="menu-toggle" aria-label="Menu" aria-expanded="false" onclick="document.getElementById('navLinks').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="page-head">
+  <div class="wrap">
+    <p class="breadcrumb"><a href="index.html">Home</a> / About</p>
+    <h1>Built on one block</h1>
+    <p class="muted" style="max-width:60ch;">Why UniStyle only makes a handful of styles — and why they all share the same pattern.</p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap split">
+    <div>
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:340px;">
+        <path d="M50 5 C39 5 31 13 31 23 L31 29 L18 42 L27 51 L34 43 L34 95 L66 95 L66 43 L73 51 L82 42 L69 29 L69 23 C69 13 61 5 50 5 Z" fill="#c8734f" stroke="#16151c" stroke-width="3"/>
+        <path d="M40 26 C40 35 45 39 50 39 C55 39 60 35 60 26" fill="none" stroke="#16151c" stroke-width="1.6" stroke-dasharray="3 3"/>
+      </svg>
+    </div>
+    <div>
+      <p class="eyebrow">How we started</p>
+      <h2 style="font-size:2.4rem;">A wardrobe, not a catalog</h2>
+      <p class="muted">UniStyle started with a simple frustration: too many racks split into "men's" and "women's" sections selling nearly identical clothes cut two different ways. We asked a small pattern-maker to draft one clean block — a tee, a jacket, a trouser — sized from XS to XL, and built the label around just that.</p>
+      <p class="muted">Every piece we release has to earn its place next to the others. If it doesn't hold up after a hundred washes, it doesn't go on the site.</p>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--paper-dim);">
+  <div class="wrap">
+    <div class="section-head">
+      <div><p class="eyebrow">What we stand for</p><h2>Three things we won't compromise on</h2></div>
+    </div>
+    <div class="value-grid">
+      <div class="value-card">
+        <p class="num">01</p>
+        <h3 style="font-size:1.3rem;">One size range, no gate</h3>
+        <p class="muted">Every style is graded across the same XS–XL range. You shop by fit and preference, not by a label that assumes who you are.</p>
+      </div>
+      <div class="value-card">
+        <p class="num">02</p>
+        <h3 style="font-size:1.3rem;">Small batches, real seams</h3>
+        <p class="muted">We cut and sew in short runs with a partner workshop, which means better quality control and far less unsold stock.</p>
+      </div>
+      <div class="value-card">
+        <p class="num">03</p>
+        <h3 style="font-size:1.3rem;">Honest pricing</h3>
+        <p class="muted">The price on the tag is what you pay — no checkout surprises, and no payment details required until your order is on its way.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="center">
+  <div class="wrap">
+    <p class="eyebrow" style="justify-content:center;">Ready to look</p>
+    <h2 style="font-size:2.4rem;">See the current collection</h2>
+    <a href="shop.html" class="btn" style="margin-top:14px;">Shop UniStyle</a>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="stitch"></div>
+    <div class="footer-bottom">
+      <span>© <span data-year></span> UniStyle. All rights reserved.</span>
+      <span>Built for a small business, one seam at a time.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

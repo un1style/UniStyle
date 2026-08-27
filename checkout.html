@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — UniStyle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="logo">UNI<span>STYLE</span></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html" data-page="index.html">Home</a>
+      <a href="shop.html" data-page="shop.html">Shop</a>
+      <a href="about.html" data-page="about.html">About</a>
+      <a href="contact.html" data-page="contact.html">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <a href="cart.html" class="icon-btn" aria-label="Cart">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16151c" stroke-width="1.8"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        <span class="cart-count" data-cart-count>0</span>
+      </a>
+      <button class="menu-toggle" aria-label="Menu" aria-expanded="false" onclick="document.getElementById('navLinks').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="page-head">
+  <div class="wrap">
+    <p class="breadcrumb"><a href="index.html">Home</a> / <a href="cart.html">Cart</a> / Checkout</p>
+    <h1>Checkout</h1>
+  </div>
+</div>
+
+<section>
+  <div class="wrap" id="checkoutWrap"></div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="stitch"></div>
+    <div class="footer-bottom">
+      <span>© <span data-year></span> UniStyle. All rights reserved.</span>
+      <span>Pay on delivery — no card required to order.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script>
+  const wrap = document.getElementById("checkoutWrap");
+
+  function renderForm(){
+    const lines = getCartLines();
+    if(!lines.length){
+      wrap.innerHTML = `
+        <div class="empty-state">
+          <h2>Nothing to check out yet</h2>
+          <p class="muted">Add something to your cart first.</p>
+          <a href="shop.html" class="btn">Browse the shop</a>
+        </div>`;
+      return;
+    }
+    const totals = getCartTotals();
+
+    wrap.innerHTML = `
+      <div class="checkout-layout">
+        <form id="checkoutForm">
+          <h2 style="font-size:1.6rem;">Shipping details</h2>
+          <div class="form-grid">
+            <div class="field"><label for="fullName">Full name</label><input id="fullName" required autocomplete="name"></div>
+            <div class="field"><label for="email">Email</label><input id="email" type="email" required autocomplete="email"></div>
+            <div class="field"><label for="phone">Phone</label><input id="phone" type="tel" required autocomplete="tel"></div>
+            <div class="field"><label for="zip">ZIP / Postal code</label><input id="zip" required autocomplete="postal-code"></div>
+            <div class="field full"><label for="address">Street address</label><input id="address" required autocomplete="street-address"></div>
+            <div class="field"><label for="city">City</label><input id="city" required autocomplete="address-level2"></div>
+            <div class="field"><label for="country">Country</label><input id="country" required autocomplete="country-name"></div>
+            <div class="field full"><label for="notes">Order notes (optional)</label><textarea id="notes" rows="3"></textarea></div>
+          </div>
+
+          <h2 style="font-size:1.3rem;margin-top:30px;">Payment</h2>
+          <div class="field" style="border:1.5px dashed var(--ink);border-radius:var(--radius);padding:16px;">
+            <label style="text-transform:none;font-size:.9rem;color:var(--ink);">
+              <input type="checkbox" checked disabled style="width:auto;margin-right:8px;">
+              Cash / Pay on delivery — no card details needed today
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn--block" style="margin-top:24px;">Place order — ${formatPrice(totals.total)}</button>
+        </form>
+
+        <div class="summary-box">
+          <h3 style="font-size:1.3rem;">Order summary</h3>
+          ${lines.map(l => `
+            <div class="summary-row"><span>${l.product.name} (${l.size}) × ${l.qty}</span><span>${formatPrice(l.product.price * l.qty)}</span></div>
+          `).join("")}
+          <div class="summary-row" style="border-top:1.5px dashed var(--ink);padding-top:12px;margin-top:6px;"><span>Subtotal</span><span>${formatPrice(totals.subtotal)}</span></div>
+          <div class="summary-row"><span>Shipping</span><span>${formatPrice(totals.shipping)}</span></div>
+          <div class="summary-row total"><span>Total</span><span>${formatPrice(totals.total)}</span></div>
+        </div>
+      </div>`;
+
+    document.getElementById("checkoutForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const customer = {
+        name: document.getElementById("fullName").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        address: document.getElementById("address").value,
+        city: document.getElementById("city").value,
+        zip: document.getElementById("zip").value,
+        country: document.getElementById("country").value,
+        notes: document.getElementById("notes").value
+      };
+      const order = placeOrder(customer);
+      renderConfirmation(order);
+    });
+  }
+
+  function renderConfirmation(order){
+    wrap.innerHTML = `
+      <div class="confirm-box">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="42" fill="none" stroke="#1f9d55" stroke-width="4"/><path d="M32 52 L44 64 L70 36" fill="none" stroke="#1f9d55" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h2 style="font-size:2rem;">Order placed, ${order.customer.name.split(" ")[0] || "there"}!</h2>
+        <p class="muted">We'll reach out at ${order.customer.email} to confirm delivery. Pay when your order arrives.</p>
+        <div class="order-id">${order.id}</div>
+        <p class="muted">Total due on delivery: <strong style="color:var(--ink);">${formatPrice(order.totals.total)}</strong></p>
+        <div style="margin-top:24px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+          <a href="shop.html" class="btn">Keep shopping</a>
+          <a href="index.html" class="btn btn--ghost">Back to home</a>
+        </div>
+      </div>`;
+  }
+
+  renderForm();
+</script>
+</body>
+</html>
