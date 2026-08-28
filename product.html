@@ -102,7 +102,7 @@
     section.innerHTML = `
       <div class="wrap product-detail">
         <div class="pd-media" style="background:${product.swatch}22;">
-          ${getGarmentSVG(product.icon, product.swatch)}
+          ${getGarmentSVG(product.icon, product.swatch, product.image) }
         </div>
         <div>
           <span class="pd-cat">${product.category}</span>
@@ -166,7 +166,7 @@
     const related = PRODUCTS.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
     document.getElementById("relatedGrid").innerHTML = (related.length ? related : PRODUCTS.filter(p => p.id !== product.id).slice(0,4)).map(p => `
       <div class="card">
-        <a href="product.html?id=${p.id}" class="card-media" style="background:${p.swatch}22;">${getGarmentSVG(p.icon, p.swatch)}</a>
+        <a href="product.html?id=${p.id}" class="card-media" style="background:${p.swatch}22;">${getGarmentSVG(p.icon, p.swatch, p.image)}</a>
         <div class="card-body">
           <span class="card-cat">${p.category}</span>
           <a href="product.html?id=${p.id}"><h3 class="card-name">${p.name}</h3></a>
