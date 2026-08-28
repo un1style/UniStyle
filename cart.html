@@ -91,7 +91,7 @@
 
     document.getElementById("cartItems").innerHTML = lines.map(line => `
       <div class="cart-item">
-        <div class="cart-item-media" style="background:${line.product.swatch}22;">${getGarmentSVG(line.product.icon, line.product.swatch)}</div>
+        <div class="cart-item-media" style="background:${line.product.swatch}22;">${getGarmentSVG(line.product.icon, line.product.swatch, line.product.image)}</div>
         <div>
           <a href="product.html?id=${line.product.id}" class="cart-item-name">${line.product.name}</a>
           <div class="cart-item-meta">Size ${line.size} · ${formatPrice(line.product.price)} each</div>
