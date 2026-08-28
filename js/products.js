@@ -113,3 +113,4 @@ const PRODUCTS = [
 function formatPrice(n){ return "৳" + n.toFixed(0); }
 function getProductById(id){ return PRODUCTS.find(p => p.id === Number(id)); }
 function getCategories(){ return [...new Set(PRODUCTS.map(p => p.category))]; }
+w
