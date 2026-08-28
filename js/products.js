@@ -8,7 +8,8 @@
 
 const INK = "#16151c";
 
-function getGarmentSVG(type, fill){
+function getGarmentSVG(type, fill,image){
+  if(image){ return `<img src="${image}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:2px;">`; }
   const stitch = `stroke-dasharray="4 3" stroke="${INK}" stroke-width="1.5" fill="none"`;
   const outline = `stroke="${INK}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"`;
   let inner = "";
@@ -105,7 +106,7 @@ const PRODUCTS = [
   {id:11, name:"A-Line Denim Skirt", category:"Dresses", icon:"skirt", swatch:SWATCHES.denim,  price:48, oldPrice:null, sizes:["XS","S","M","L","XL"], desc:"Rigid denim cut into a clean A-line with a raw hem and a high rise — the anchor piece of a capsule wardrobe.", stock:true},
   {id:12, name:"Fieldnote Cap",          category:"Accessories",icon:"cap",     swatch:SWATCHES.moss,   price:22, oldPrice:null, sizes:["One Size"], desc:"A six-panel cap in washed twill with a low profile and an adjustable strap at the back.", stock:true},
   {id:13, name:"Canvas Market Tote",     category:"Accessories",icon:"tote",    swatch:SWATCHES.sand,   price:26, oldPrice:32,   sizes:["One Size"], desc:"Ten-ounce cotton canvas, reinforced base, and handles long enough to sling over one shoulder.", stock:true},
-  {id:14, name:"Stylish Denim Shirt", category:"Tops", icon:"shirt", swatch:SWATCHES.denim, price:800, oldPrice:null, sizes:["M","L","XL","2XL"], desc:"স্টাইলিশ ডেনিম লং স্লিভ শার্ট – আপনার দৈনন্দিন লুককে করুন আরও স্মার্ট! প্রিমিয়াম কোয়ালিটির Denim Single Pocket Long Sleeve Shirt এখন আপনার জন্য। ক্যাজুয়াল, অফিস, আড্ডা বা যেকোনো আউটিং—সব জায়গায় মানিয়ে যাবে এই ট্রেন্ডি ডেনিম শার্টটি। • 98% Denim Fabric • সফট ও কমফোর্টেবল ফিনিশ • স্টাইলিশ সিঙ্গেল পকেট ডিজাইন • ফুল স্লিভ ও রেগুলার ফিট • Made in Bangladesh. Size Chart — M: Chest 40in, Length 28in • L: Chest 42in, Length 29in • XL: Chest 44in, Length 30in • 2XL: Chest 46in, Length 31in", stock:true},
+  {id:14, name:"Stylish Denim Shirt", category:"Tops", icon:"shirt", swatch:SWATCHES.denim, image:"images/denim-shirt-image-2.jpg", price:800, oldPrice:null, sizes:["M","L","XL","2XL"], desc:"স্টাইলিশ ডেনিম লং স্লিভ শার্ট – আপনার দৈনন্দিন লুককে করুন আরও স্মার্ট! প্রিমিয়াম কোয়ালিটির Denim Single Pocket Long Sleeve Shirt এখন আপনার জন্য। ক্যাজুয়াল, অফিস, আড্ডা বা যেকোনো আউটিং—সব জায়গায় মানিয়ে যাবে এই ট্রেন্ডি ডেনিম শার্টটি। • 98% Denim Fabric • সফট ও কমফোর্টেবল ফিনিশ • স্টাইলিশ সিঙ্গেল পকেট ডিজাইন • ফুল স্লিভ ও রেগুলার ফিট • Made in Bangladesh. Size Chart — M: Chest 40in, Length 28in • L: Chest 42in, Length 29in • XL: Chest 44in, Length 30in • 2XL: Chest 46in, Length 31in", stock:true},
 ];
 
 /* ---------- small helpers used across pages ---------- */
